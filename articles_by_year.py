@@ -9,7 +9,7 @@ parser.add_argument('--citations', type=argparse.FileType('r'), required=True)
 args    = parser.parse_args()
 
 
-countries = [n.strip() for n in open('iso_3166.txt').readlines()]
+#countries = [n.strip() for n in open('iso_3166.txt').readlines()]
 
 count = {}
 
