@@ -4,9 +4,10 @@ import time, datetime
 from itertools import combinations
 from pprint import pprint
 import networkx as nx
+import sys
 
 parser = argparse.ArgumentParser(description='create a meshterm network from a medline file')
-parser.add_argument('--medline', type=argparse.FileType('r'), required=True, help="citations file in medline format")
+parser.add_argument('medline', type=argparse.FileType('r'), default=sys.stdin, help="citations file in medline format")
 
 args    = parser.parse_args()
 
