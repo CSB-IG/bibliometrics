@@ -1,3 +1,4 @@
+# coding: utf8
 import argparse
 from Bio import Medline
 import time, datetime
@@ -9,7 +10,7 @@ parser.add_argument('--citations', type=argparse.FileType('r'), required=True)
 args    = parser.parse_args()
 
 
-countries = [n.strip() for n in open('iso_3166.txt').readlines()]
+from iso_3166 import countries
 
 count = {}
 
