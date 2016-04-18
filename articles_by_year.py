@@ -30,12 +30,21 @@ for r in records:
     if 'DEP' in r.keys():
         conv = time.strptime( r['DEP'], "%Y%m%d" )
         r['DEP'] = datetime.datetime(*conv[:6]) # date of electronic publication
+    if 'DA' in r.keys():
+        conv = time.strptime( r['DA'], "%Y%m%d" )
+        r['DA'] = datetime.datetime(*conv[:6]) # date revised
 
+
+        
 
     if 'CRDT' in r:
         year = r['CRDT'].year
-    else:
+    elif 'DCOM' in r:
         year = r.get('DCOM').year
+    elif 'DA' in r:
+        year = r.get('DA').year
+    else:
+        pprint(r)
 
     if year in count:
         count[year] += 1
