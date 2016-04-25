@@ -1,20 +1,16 @@
 import argparse
 from Bio import Medline
 import time, datetime
+import sys
 from pprint import pprint
 
-parser = argparse.ArgumentParser(description='grab adscriptions from medline')
-parser.add_argument('--citations', type=argparse.FileType('r'), required=True)
-
+parser = argparse.ArgumentParser(description='Prints to stdout a table of number of publications per year for medline input.')
+parser.add_argument('medline', type=argparse.FileType('r'), default=sys.stdin, help="citations file in medline format")
 args    = parser.parse_args()
-
-
-#countries = [n.strip() for n in open('iso_3166.txt').readlines()]
 
 count = {}
 
-adscriptions = set()
-records = Medline.parse( args.citations )
+records = Medline.parse( args.medline )
 for r in records:
     
     # evenly format dates
@@ -34,7 +30,6 @@ for r in records:
         conv = time.strptime( r['DA'], "%Y%m%d" )
         r['DA'] = datetime.datetime(*conv[:6]) # date revised
 
-
         
 
     if 'CRDT' in r:
@@ -44,7 +39,8 @@ for r in records:
     elif 'DA' in r:
         year = r.get('DA').year
     else:
-        pprint(r)
+        exit(1) # no usable date found
+        #pprint(r)
 
     if year in count:
         count[year] += 1
